@@ -76,21 +76,23 @@ public class Sentence {
 				chunk = null;
 				tokens = new ArrayList<Token>();
 			} else if (chunk != null){
-				String[] ary = line.split(" ");
-				Token token = new Token(
-						chunks.size()
-						,ary[T_ID]
-						,ary[T_READ]
-						/*
-						 * CaboCha自体にバグがあり、baseを取得できない場合がある(詳細不明)。
-						 * そのためbaseだけは元の文章を元に生成する。
-						 */
-						,RegexParser.removeTags(line)
-						,ary[T_POS]
-						,ary[T_CTYPE]
-						,ary[T_CFORM]
-						,ary[T_NE]
-				);
+//				String[] ary = line.split(" ");
+//				Token token = new Token(
+//						chunks.size()
+//						,ary[T_ID]
+//						,ary[T_READ]
+//						/*
+//						 * CaboCha自体にバグがあり、baseを取得できない場合がある(詳細不明)。
+//						 * そのためbaseだけは元の文章を元に生成する。
+//						 */
+//						,RegexParser.removeTags(line)
+//						,ary[T_POS]
+//						,ary[T_CTYPE]
+//						,ary[T_CFORM]
+//						,ary[T_NE]
+//				);
+				Token token = new Token(line);
+				token.setParentChunkId(chunks.size());
 				tokens.add(token);
 			}
 		}

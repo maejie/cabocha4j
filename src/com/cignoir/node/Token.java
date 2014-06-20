@@ -49,6 +49,26 @@ public class Token {
 				.getInstance(RegexParser.getInnerString(ne, dq, dq));
 		this.posDiv = getPosDiv(pos);
 	}
+	
+	public Token(String tokenLine){
+		String[] firstArray = tokenLine.split(" ");
+		String dq = RegexParser.DOUBLE_QUATE;
+
+		this.id = Integer.parseInt(RegexParser.getInnerString(firstArray[1], dq, dq));
+		this.ne = TokenNeDiv.getInstance(RegexParser.getInnerString(firstArray[3], dq, dq));
+		this.base = RegexParser.getInnerString(firstArray[3], "\">", "</");
+
+		String[] secondArray = RegexParser.getInnerString(firstArray[2],dq,dq).split(",");
+		this.pos = secondArray[0];
+		this.ctype = secondArray[4];
+		this.cform = secondArray[5];
+		if(secondArray.length > 7){
+			this.read = secondArray[7];
+		}
+
+		this.posDiv = getPosDiv(pos);
+		
+	}
 
 	/**
 	 * このオブジェクトが持つpos、cform、またはctypeの中から

@@ -24,8 +24,8 @@ import com.cignoir.utils.CabochaUtils;
  */
 public class Cabocha {
 
-	private static final String SHIFT_JIS = "Shift-JIS";
-	private static final String OPTION_F3 = "-f3";
+	private static final String CHAR_CODE = "UTF-8";
+	private static final String OPTIONS = "-f3";
 
 	private String cabochaPath;
 
@@ -77,9 +77,9 @@ public class Cabocha {
 				System.out.println();
 				
 				// Sample 3
-				System.out.println("▼「魅力的である」に係っているものを抽出");
+				System.out.println("▼「思う」に係っているものを抽出");
 				for (Chunk chunk : chunkList) {
-					if(chunk.getBase().contains("魅力的である")) {
+					if(chunk.getBase().contains("思う")) {
 						List<Chunk> referencedBy = chunk.getReferencedBy(chunkList);
 						for(Chunk refs : referencedBy) {
 							System.out.println(refs.getBase());
@@ -106,16 +106,16 @@ public class Cabocha {
 	 */
 	public Sentence execute(String targetToAnalyze) throws IOException,
 			InterruptedException {
-		ProcessBuilder pb = new ProcessBuilder(cabochaPath, OPTION_F3);
+		ProcessBuilder pb = new ProcessBuilder(cabochaPath, OPTIONS,"-n2");
 		Process process = pb.start();
 		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(process
-				.getOutputStream(), SHIFT_JIS);
+				.getOutputStream(), CHAR_CODE);
 		outputStreamWriter.write(targetToAnalyze);
 		outputStreamWriter.close();
 
 		InputStream is = process.getInputStream();
 		BufferedReader br = new BufferedReader(new InputStreamReader(is,
-				SHIFT_JIS));
+				CHAR_CODE));
 		String line;
 		List<String> result = new ArrayList<String>();
 		while ((line = br.readLine()) != null) {
